@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나이트웍스 혈관 건강 강좌</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-shadow { box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .pulse-animation { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- 메인 컨테이너 -->
+    <div id="app" class="min-h-screen">
+        
+        <!-- 메인 화면 -->
+        <div id="mainScreen" class="fade-in">
+            <div class="gradient-bg min-h-screen flex items-center justify-center p-4">
+                <div class="bg-white rounded-2xl p-8 max-w-4xl w-full card-shadow text-center">
+                    <div class="mb-8">
+                        <i class="fas fa-heartbeat text-6xl text-red-500 mb-4 pulse-animation"></i>
+                        <h1 class="text-4xl font-bold text-gray-800 mb-4">🩸 나이트웍스로 배우는 혈관 건강 🩸</h1>
+                        <p class="text-lg text-gray-600 mb-6">노벨상 수상자가 밝힌 혈관 건강의 비밀을 알아보세요!</p>
+                    </div>
+
+                    <!-- 영상 시청 섹션 -->
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-4">📺 먼저 영상을 시청해주세요</h2>
+                        <div class="relative w-full" style="padding-bottom: 56.25%; height: 0;">
+                            <iframe 
+                                src="https://www.youtube.com/embed/kFfJnoFaGmU" 
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+
+                    <!-- 중요 안내 -->
+                    <div class="bg-yellow-100 border-l-4 border-yellow-500 p-4 mb-8 text-left">
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-exclamation-triangle text-yellow-600 mr-2"></i>
+                            <h3 class="text-lg font-semibold text-yellow-800">⚠️ 중요 안내</h3>
+                        </div>
+                        <p class="text-yellow-700 font-medium">강좌 이후에 출제되는 문제는 철저하게 영상강의 내용에 준해서 출제했습니다.</p>
+                    </div>
+
+                    <!-- 이름 입력 -->
+                    <div class="mb-8">
+                        <label class="block text-lg font-semibold text-gray-700 mb-3">👤 이름을 입력해주세요</label>
+                        <input type="text" id="studentName" placeholder="이름을 입력하세요" 
+                               class="w-full max-w-md mx-auto px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none">
+                    </div>
+
+                    <!-- 강좌 정보 -->
+                    <div class="grid md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-blue-100 p-6 rounded-lg">
+                            <i class="fas fa-book-open text-3xl text-blue-600 mb-3"></i>
+                            <h3 class="font-semibold text-blue-800">3개 단원</h3>
+                            <p class="text-blue-600">체계적인 학습</p>
+                        </div>
+                        <div class="bg-green-100 p-6 rounded-lg">
+                            <i class="fas fa-question-circle text-3xl text-green-600 mb-3"></i>
+                            <h3 class="font-semibold text-green-800">15개 문제</h3>
+                            <p class="text-green-600">재미있는 퀴즈</p>
+                        </div>
+                        <div class="bg-purple-100 p-6 rounded-lg">
+                            <i class="fas fa-gift text-3xl text-purple-600 mb-3"></i>
+                            <h3 class="font-semibold text-purple-800">80점 이상</h3>
+                            <p class="text-purple-600">특별 선물! 🎁</p>
+                        </div>
+                    </div>
+
+                    <button onclick="startCourse()" 
+                            class="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full text-xl font-semibold hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300">
+                        🚀 강좌 시작하기 🚀
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 강좌 화면 -->
+        <div id="courseScreen" class="hidden min-h-screen bg-gray-50 py-8">
+            <div class="max-w-4xl mx-auto px-4">
+                
+                <!-- 진행바 -->
+                <div class="bg-white rounded-lg p-4 mb-6 card-shadow">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-sm font-medium text-gray-700">진행률</span>
+                        <span id="progressText" class="text-sm font-medium text-blue-600">1단원 / 3단원</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3">
+                        <div id="progressBar" class="bg-gradient-to-r from-blue-500 to-purple-600 h-3 rounded-full transition-all duration-500" style="width: 33%"></div>
+                    </div>
+                </div>
+
+                <!-- 단원 내용 -->
+                <div id="chapterContent" class="bg-white rounded-lg p-8 card-shadow fade-in">
+                    <!-- 내용이 동적으로 삽입됩니다 -->
+                </div>
+
+                <!-- 네비게이션 버튼 -->
+                <div class="flex justify-between mt-6">
+                    <button id="prevBtn" onclick="previousStep()" class="hidden bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>이전
+                    </button>
+                    <button id="nextBtn" onclick="nextStep()" class="ml-auto bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors">
+                        다음<i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 결과 화면 -->
+        <div id="resultScreen" class="hidden min-h-screen gradient-bg flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl p-8 max-w-2xl w-full card-shadow text-center fade-in">
+                <div id="resultContent">
+                    <!-- 결과 내용이 동적으로 삽입됩니다 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 전역 변수
+        let currentStep = 0;
+        let studentName = '';
+        let answers = [];
+        let chapterScores = [0, 0, 0];
+        
+        // 강좌 데이터
+        const courseData = {
+            chapters: [
+                {
+                    title: "1단원: 혈관과 산화질소의 비밀",
+                    content: `
+                        <h2 class="text-3xl font-bold text-gray-800 mb-6 flex items-center">
+                            <i class="fas fa-heart text-red-500 mr-3"></i>1단원: 혈관과 산화질소의 비밀
+                        </h2>
+                        <div class="space-y-6 text-left">
+                            <div class="bg-blue-50 p-6 rounded-lg">
+                                <h3 class="text-xl font-semibold text-blue-800 mb-3">🩸 혈관은 우리 몸의 고속도로</h3>
+                                <p class="text-gray-700 leading-relaxed">
+                                    혈관은 우리 몸 전체에 산소와 영양분을 운반하는 중요한 통로입니다. 
+                                    마치 도시의 도로처럼 온몸 구석구석까지 연결되어 있어요. 
+                                    모든 혈관을 연결하면 지구 두 바퀴 반 정도의 길이가 된답니다!
+                                </p>
+                            </div>
+                            
+                            <div class="bg-green-50 p-6 rounded-lg">
+                                <h3 class="text-xl font-semibold text-green-800 mb-3">💨 산화질소는 혈관의 청소부</h3>
+                                <p class="text-gray-700 leading-relaxed">
+                                    산화질소는 혈관 내벽에서 나오는 특별한 물질이에요. 
+                                    혈관을 깨끗하게 청소하고 넓혀주는 역할을 합니다. 
+                                    마치 비누거품처럼 뽀글뽀글 나와서 혈관 벽의 찌꺼기를 제거해줍니다!
+                                </p>
+                            </div>
+                            
+                            <div class="bg-yellow-50 p-6 rounded-lg">
+                                <h3 class="text-xl font-semibold text-yellow-800 mb-3">⚠️ 나이가 들면 산화질소가 줄어들어요</h3>
+                                <p class="text-gray-700 leading-relaxed">
+                                    40대가 되면 산화질소가 잘 나오지 않아요. 
+                                    특히 밤에 잘 때, 겨울에 추울 때, 운동을 안 할 때는 더욱 줄어듭니다. 
+                                    그래서 혈관이 막히고 좁아질 수 있어서 위험해요.
+                                </p>
+                            </div>
+                        </div>
+                    `,
+                    questions: [
+                        {
+                            question: "혈관이 우리 몸에서 하는 일은 무엇인가요?",
+                            options: ["음식을 소화시킨다", "산소와 영양분을 운반한다", "뼈를 만든다", "머리카락을 기른다"],
+                            correct: 1
+                        },
+                        {
+                            question: "산화질소가 하는 일은 무엇인가요?",
+                            options: ["혈관을 막는다", "혈관을 청소하고 넓힌다", "혈관을 좁힌다", "혈관을 딱딱하게 만든다"],
+                            correct: 1
+                        },
+                        {
+                            question: "모든 혈관을 연결하면 얼마나 길까요?",
+                            options: ["지구 한 바퀴", "지구 두 바퀴 반", "달까지의 거리", "서울에서 부산까지"],
+                            correct: 1
+                        },
+                        {
+                            question: "산화질소가 잘 나오지 않는 때는 언제인가요?",
+                            options: ["여름에 더울 때", "운동할 때", "밤에 잠잘 때", "웃을 때"],
+                            correct: 2
+                        },
+                        {
+                            question: "40대가 되면 산화질소는 어떻게 될까요?",
+                            options: ["더 많이 나온다", "잘 나오지 않는다", "색깔이 변한다", "냄새가 난다"],
+                            correct: 1
+                        }
+                    ]
+                },
+                {
+                    title: "2단원: 노벨상 박사님과 L-아르기닌",
+                    content: `
+                        <h2 class="text-3xl font-bold text-gray-800 mb-6 flex items-center">
+                            <i class="fas fa-award text-yellow-500 mr-3"></i>2단원: 노벨상 박사님과 L-아르기닌
+                        </h2>
+                        <div class="space-y-6 text-left">
+                            <div class="bg-purple-50 p-6 rounded-lg">
+                                <h3 class="text-xl font-semibold text-purple-800 mb-3">🏆 루이스 이그나로 박사님의 발견</h3>
+                                <p class="text-gray-700 leading-relaxed">
+                                    1998년 노벨 생리의학상을 받은 루이스 이그나로 박사님이 
+                                    산화질소를 많이 만들어내는 방법을 발견했어요. 
+                                    바로 'L-아르기닌'이라는 단백질을 먹으면 된다는 것이었습니다!
+                                </p>
+                            </div>
+                            
+                            <div class="bg-pink-50 p-6 rounded-lg">
+                                <h3 class="text-xl font-semibold text-pink-800 mb-3">💊 L-아르기닌의 놀라운 효과</h3>
+                                <ul class="text-gray-700 leading-relaxed space-y-2">
+                                    <li>• 혈관을 넓혀서 혈액순환을 좋게 해요</li>
+                                    <li>• 피부를 탱탱하고 예쁘게 만들어요</li>
+                                    <li>• 머리가 좋아져서 공부가 잘 돼요</li>
+                                    <li>• 근육을 튼튼하게 만들어요</li>
+                                    <li>• 성장호르몬을 많이 나오게 해요</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-indigo-50 p-6 rounded-lg">
+                                <h3 class="text-xl font-semibold text-indigo-800 mb-3">🤝 박사님과 허벌라이프의 만남</h3>
+                                <p class="text-gray-700 leading-relaxed">
+                                    박사님은 비싼 약 대신 많은 사람들이 쉽게 사용할 수 있는 
+                                    제품을 만들고 싶었어요. 그래서 허벌라이프와 함께 
+                                    '나이트웍스'라는 특별한 제품을 만들게 되었습니다!
+                                </p>
+                            </div>
+                        </div>
+                    `,
+                    questions: [
+                        {
+                            question: "루이스 이그나로 박사님이 받은 상은 무엇인가요?",
+                            options: ["올림픽 금메달", "노벨 생리의학상", "아카데미상", "그래미상"],
+                            correct: 1
+                        },
+                        {
+                            question: "박사님이 발견한 산화질소를 만드는 물질은?",
+                            options: ["L-아르기닌", "비타민C", "칼슘", "철분"],
+                            correct: 0
+                        },
+                        {
+                            question: "L-아르기닌이 혈관에 주는 효과는?",
+                            options: ["혈관을 막는다", "혈관을 딱딱하게 만든다", "혈관을 넓힌다", "혈관을 없앤다"],
+                            correct: 2
+                        },
+                        {
+                            question: "박사님이 허벌라이프와 함께 만든 제품은?",
+                            options: ["나이트웍스", "데이웍스", "모닝웍스", "선웍스"],
+                            correct: 0
+                        },
+                        {
+                            question: "L-아르기닌이 공부에 도움이 되는 이유는?",
+                            options: ["글씨를 예쁘게 써준다", "뇌혈관을 좋게 해준다", "책상을 정리해준다", "연필을 깎아준다"],
+                            correct: 1
+                        }
+                    ]
+                },
+                {
+                    title: "3단원: 나이트웍스의 신비한 효과",
+                    content: `
+                        <h2 class="text-3xl font-bold text-gray-800 mb-6 flex items-center">
+                            <i class="fas fa-magic text-blue-500 mr-3"></i>3단원: 나이트웍스의 신비한 효과
+                        </h2>
+                        <div class="space-y-6 text-left">
+                            <div class="bg-blue-50 p-6 rounded-lg">
+                                <h3 class="text-xl font-semibold text-blue-800 mb-3">🌙 밤에 먹는 특별한 이유</h3>
+                                <p class="text-gray-700 leading-relaxed">
+                                    나이트웍스는 밤에 먹어요. 왜냐하면 밤에는 산화질소가 
+                                    잘 나오지 않아서 혈관이 막힐 수 있거든요. 
+                                    나이트웍스를 먹고 푹 자면 4시간만 자도 8시간 잔 것 같은 효과가 있어요!
+                                </p>
+                            </div>
+                            
+                            <div class="bg-red-50 p-6 rounded-lg">
+                                <h3 class="text-xl font-semibold text-red-800 mb-3">❤️ 온 가족이 함께 건강해져요</h3>
+                                <ul class="text-gray-700 leading-relaxed space-y-2">
+                                    <li>• <strong>어린이:</strong> 키가 크고 머리가 좋아져요</li>
+                                    <li>• <strong>어른:</strong> 피부가 예뻐지고 피로가 없어져요</li>
+                                    <li>• <strong>어르신:</strong> 치매 예방과 혈관 건강에 좋아요</li>
+                                    <li>• <strong>운동하는 사람:</strong> 근육통이 줄어들어요</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-green-50 p-6 rounded-lg">
+                                <h3 class="text-xl font-semibold text-green-800 mb-3">🎁 특별한 부작용들</h3>
+                                <ul class="text-gray-700 leading-relaxed space-y-2">
+                                    <li>• 생리통이 줄어들어요 (여성)</li>
+                                    <li>• 손발이 따뜻해져요</li>
+                                    <li>• 기침이 줄어들어요</li>
+                                    <li>• 변비가 좋아져요</li>
+                                    <li>• 면역력이 강해져요</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `,
+                    questions: [
+                        {
+                            question: "나이트웍스를 언제 먹는 것이 좋을까요?",
+                            options: ["아침에", "점심에", "밤에", "간식 시간에"],
+                            correct: 2
+                        },
+                        {
+                            question: "나이트웍스를 먹고 4시간 잠자면 어떤 효과가 있나요?",
+                            options: ["2시간 잔 효과", "4시간 잔 효과", "6시간 잔 효과", "8시간 잔 효과"],
+                            correct: 3
+                        },
+                        {
+                            question: "어린이가 나이트웍스를 먹으면 어떤 좋은 점이 있나요?",
+                            options: ["키가 크고 머리가 좋아진다", "게임을 잘하게 된다", "만화를 잘 그린다", "춤을 잘 춘다"],
+                            correct: 0
+                        },
+                        {
+                            question: "운동하는 사람에게 나이트웍스가 좋은 이유는?",
+                            options: ["운동복을 예쁘게 해준다", "근육통을 줄여준다", "운동화를 깨끗하게 해준다", "운동 시간을 늘려준다"],
+                            correct: 1
+                        },
+                        {
+                            question: "나이트웍스의 특별한 부작용이 아닌 것은?",
+                            options: ["생리통 감소", "손발 따뜻함", "기침 감소", "머리카락 색깔 변화"],
+                            correct: 3
+                        }
+                    ]
+                }
+            ]
+        };
+
+        // 강좌 시작
+        function startCourse() {
+            const name = document.getElementById('studentName').value.trim();
+            if (!name) {
+                alert('이름을 입력해주세요!');
+                return;
+            }
+            
+            studentName = name;
+            document.getElementById('mainScreen').classList.add('hidden');
+            document.getElementById('courseScreen').classList.remove('hidden');
+            
+            showCurrentStep();
+        }
+
+        // 현재 단계 표시
+        function showCurrentStep() {
+            const chapterIndex = Math.floor(currentStep / 6);
+            const stepInChapter = currentStep % 6;
+            
+            updateProgress();
+            
+            if (stepInChapter === 0) {
+                // 단원 학습 내용 표시
+                showChapterContent(chapterIndex);
+            } else {
+                // 문제 표시
+                showQuestion(chapterIndex, stepInChapter - 1);
+            }
+            
+            updateNavigationButtons();
+        }
+
+        // 단원 내용 표시
+        function showChapterContent(chapterIndex) {
+            const chapter = courseData.chapters[chapterIndex];
+            document.getElementById('chapterContent').innerHTML = chapter.content;
+        }
+
+        // 문제 표시
+        function showQuestion(chapterIndex, questionIndex) {
+            const question = courseData.chapters[chapterIndex].questions[questionIndex];
+            const globalQuestionIndex = chapterIndex * 5 + questionIndex;
+            
+            const content = `
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                    📝 문제 ${globalQuestionIndex + 1}번
+                </h2>
+                <div class="bg-blue-50 p-6 rounded-lg mb-6">
+                    <h3 class="text-xl font-semibold text-blue-800 mb-4">${question.question}</h3>
+                    <div class="space-y-3">
+                        ${question.options.map((option, index) => `
+                            <label class="flex items-center p-3 bg-white rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                                <input type="radio" name="question${globalQuestionIndex}" value="${index}" 
+                                       onchange="saveAnswer(${globalQuestionIndex}, ${index})"
+                                       ${answers[globalQuestionIndex] === index ? 'checked' : ''}
+                                       class="mr-3 text-blue-600">
+                                <span class="text-lg">${index + 1}. ${option}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('chapterContent').innerHTML = content;
+        }
+
+        // 답안 저장
+        function saveAnswer(questionIndex, answerIndex) {
+            answers[questionIndex] = answerIndex;
+        }
+
+        // 진행률 업데이트
+        function updateProgress() {
+            const totalSteps = 18; // 3단원 × (1내용 + 5문제) = 18
+            const progress = ((currentStep + 1) / totalSteps) * 100;
+            
+            document.getElementById('progressBar').style.width = progress + '%';
+            
+            const chapterIndex = Math.floor(currentStep / 6) + 1;
+            document.getElementById('progressText').textContent = `${chapterIndex}단원 / 3단원`;
+        }
+
+        // 네비게이션 버튼 업데이트
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            if (currentStep === 0) {
+                prevBtn.classList.add('hidden');
+            } else {
+                prevBtn.classList.remove('hidden');
+            }
+            
+            if (currentStep >= 17) {
+                nextBtn.textContent = '결과 확인';
+                nextBtn.innerHTML = '<i class="fas fa-check mr-2"></i>결과 확인';
+            } else {
+                nextBtn.innerHTML = '다음<i class="fas fa-arrow-right ml-2"></i>';
+            }
+        }
+
+        // 다음 단계
+        function nextStep() {
+            if (currentStep >= 17) {
+                showResult();
+                return;
+            }
+            
+            // 문제 단계에서 답안 확인
+            if (currentStep % 6 !== 0 && currentStep % 6 <= 5) {
+                const globalQuestionIndex = Math.floor(currentStep / 6) * 5 + (currentStep % 6 - 1);
+                if (answers[globalQuestionIndex] === undefined) {
+                    alert('답을 선택해주세요!');
+                    return;
+                }
+            }
+            
+            currentStep++;
+            showCurrentStep();
+        }
+
+        // 이전 단계
+        function previousStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                showCurrentStep();
+            }
+        }
+
+        // 결과 표시
+        function showResult() {
+            // 점수 계산
+            let totalCorrect = 0;
+            
+            for (let chapterIndex = 0; chapterIndex < 3; chapterIndex++) {
+                let chapterCorrect = 0;
+                const questions = courseData.chapters[chapterIndex].questions;
+                
+                for (let questionIndex = 0; questionIndex < 5; questionIndex++) {
+                    const globalIndex = chapterIndex * 5 + questionIndex;
+                    if (answers[globalIndex] === questions[questionIndex].correct) {
+                        chapterCorrect++;
+                        totalCorrect++;
+                    }
+                }
+                
+                chapterScores[chapterIndex] = (chapterCorrect / 5) * 100;
+            }
+            
+            const totalScore = Math.round((totalCorrect / 15) * 100);
+            const isPass = totalScore >= 80;
+            
+            // 결과 데이터 저장 (실제 구현에서는 서버로 전송)
+            const resultData = {
+                name: studentName,
+                scores: chapterScores,
+                totalScore: totalScore,
+                timestamp: new Date().toLocaleString(),
+                answers: answers
+            };
+            
+            // 로컬 스토리지에 저장 (관리자가 확인할 수 있도록)
+            let results = JSON.parse(localStorage.getItem('courseResults') || '[]');
+            results.push(resultData);
+            localStorage.setItem('courseResults', JSON.stringify(results));
+            
+            // 결과 화면 표시
+            const resultHTML = `
+                <div class="text-center">
+                    ${isPass ? 
+                        '<i class="fas fa-trophy text-6xl text-yellow-500 mb-4 pulse-animation"></i>' :
+                        '<i class="fas fa-medal text-6xl text-gray-400 mb-4"></i>'
+                    }
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">${studentName}님의 결과</h2>
+                    
+                    <div class="bg-gray-100 p-6 rounded-lg mb-6">
+                        <div class="text-4xl font-bold ${isPass ? 'text-green-600' : 'text-orange-600'} mb-2">
+                            ${totalScore}점
+                        </div>
+                        <div class="text-lg text-gray-600">총 15문제 중 ${totalCorrect}문제 정답</div>
+                    </div>
+                    
+                    <div class="grid grid-cols-3 gap-4 mb-6">
+                        ${chapterScores.map((score, index) => `
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <div class="text-sm text-blue-600 font-medium">${index + 1}단원</div>
+                                <div class="text-xl font-bold text-blue-800">${Math.round(score)}점</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    ${isPass ? `
+                        <div class="bg-green-100 border-2 border-green-300 p-6 rounded-lg mb-6">
+                            <i class="fas fa-gift text-3xl text-green-600 mb-3"></i>
+                            <h3 class="text-xl font-bold text-green-800 mb-2">축하합니다! 🎉</h3>
+                            <p class="text-green-700">80점 이상을 달성하여 특별 선물을 받을 자격이 있습니다!</p>
+                            <p class="text-sm text-green-600 mt-2">관리자가 곧 연락드릴 예정입니다.</p>
+                        </div>
+                    ` : `
+                        <div class="bg-orange-100 border-2 border-orange-300 p-6 rounded-lg mb-6">
+                            <i class="fas fa-redo text-2xl text-orange-600 mb-3"></i>
+                            <h3 class="text-lg font-bold text-orange-800 mb-2">아쉽네요!</h3>
+                            <p class="text-orange-700">80점 이상을 위해 다시 도전해보세요!</p>
+                        </div>
+                    `}
+                    
+                    <button onclick="restartCourse()" 
+                            class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors mr-4">
+                        <i class="fas fa-redo mr-2"></i>다시 도전
+                    </button>
+                    <button onclick="goHome()" 
+                            class="bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition-colors">
+                        <i class="fas fa-home mr-2"></i>처음으로
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById('resultContent').innerHTML = resultHTML;
+            document.getElementById('courseScreen').classList.add('hidden');
+            document.getElementById('resultScreen').classList.remove('hidden');
+        }
+
+        // 강좌 재시작
+        function restartCourse() {
+            currentStep = 0;
+            answers = [];
+            chapterScores = [0, 0, 0];
+            
+            document.getElementById('resultScreen').classList.add('hidden');
+            document.getElementById('courseScreen').classList.remove('hidden');
+            
+            showCurrentStep();
+        }
+
+        // 홈으로 돌아가기
+        function goHome() {
+            currentStep = 0;
+            answers = [];
+            chapterScores = [0, 0, 0];
+            studentName = '';
+            document.getElementById('studentName').value = '';
+            
+            document.getElementById('resultScreen').classList.add('hidden');
+            document.getElementById('mainScreen').classList.remove('hidden');
+        }
+
+        // 관리자용 결과 확인 함수 (개발자 도구에서 사용)
+        function getResults() {
+            return JSON.parse(localStorage.getItem('courseResults') || '[]');
+        }
+
+        // 페이지 로드 시 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('나이트웍스 혈관 건강 강좌가 시작되었습니다!');
+            console.log('관리자님께서 결과를 확인하시려면 개발자 도구에서 getResults() 함수를 실행하세요.');
+        });
+    </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"975922777ee78136","serverTiming":{"name":{"cfExtPri":true,"cfEdge":true,"cfOrigin":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"version":"2025.8.0","token":"4edd5f8ec12a48cfa682ab8261b80a79"}' crossorigin="anonymous"></script>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDnvnrFS59xjubxw5n1BchzfiQS172HrQePF5%2BYwHzAvSqnWHseYh3vvaelksJ8A9aCI%2Fw9iMaaZjhe6goP7pNfshNtCNaCiX4vx4siAAmaxuZygxdWu247fNMFc7F%2FM4FjnIfMf8ZVHakUZTNwoyg48SHgTuVyBcD8%2FVBG%2FfFJCPsyGTVBMJoZy5cT90274ZOMhoB%2F38PTM7ajpB9IZVpK%2BE10%2Fep0Kt5aB1HBk%2BT6SJv%2ByzjoFlvngs3oT63%2FC%2FO6OX97gLhwBqC3dbrkUZU8JallRGa%2BFtLAJchCov%2FB0ajeYq%2BEB3lCrTXcpDsxpUx%2FvRbp4SH1WWnnWsqEl0t3AmSr6Iit4cO9GCBuEiPGDQpp1fpJ5aj%2F1GTTQzTmn%2BbJRZmab4zhT%2FRvyvfp9T1CqrDcwPqsxu2QQeq2oVcP4ogiQ2sc0KGmcfpJHlqTjdqkMfk3DGYf0t7ABJv3lNpH0gdMpCVv1xYa0xtYToINJnGeAppD7ulPkjGDOqfP%2FLHg%3D%3D";
+        window.__genspark_locale = "ko-KR";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDnvnrFS59xjubxw5n1BchzfiQS172HrQePF5+YwHzAvSqnWHseYh3vvaelksJ8A9aCI/w9iMaaZjhe6goP7pNfshNtCNaCiX4vx4siAAmaxuZygxdWu247fNMFc7F/M4FjnIfMf8ZVHakUZTNwoyg48SHgTuVyBcD8/VBG/fFJCPsyGTVBMJoZy5cT90274ZOMhoB/38PTM7ajpB9IZVpK+E10/ep0Kt5aB1HBk+T6SJv+yzjoFlvngs3oT63/C/O6OX97gLhwBqC3dbrkUZU8JallRGa+FtLAJchCov/B0ajeYq+EB3lCrTXcpDsxpUx/vRbp4SH1WWnnWsqEl0t3AmSr6Iit4cO9GCBuEiPGDQpp1fpJ5aj/1GTTQzTmn+bJRZmab4zhT/Rvyvfp9T1CqrDcwPqsxu2QQeq2oVcP4ogiQ2sc0KGmcfpJHlqTjdqkMfk3DGYf0t7ABJv3lNpH0gdMpCVv1xYa0xtYToINJnGeAppD7ulPkjGDOqfP/LHg==";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    
